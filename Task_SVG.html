@@ -1,0 +1,134 @@
+<html>
+    <head>
+        <title>Task1 SVG </title>
+    </head>
+    
+    <body>
+        <div style="text-align: center;">
+            <h1>Task with SVG <i> (by Abusaid Umarov)</i></h1>
+            <button onClick="window.location.reload();">Reset</button>
+        </div>
+         
+        <div id="top" style="width: 100%; height: 100px;">
+            <svg id="draggable1" width="50" height="50">
+                <circle  cx="25" cy="25" r="20"  fill="#12DA91"></circle>
+                <text x="45%" y="55%" fill="black" style="font-size: 20px;">1</text>
+            </svg>
+
+            <svg id="draggable2" width="50" height="50">
+                <circle  cx="25" cy="25" r="20"  fill="#12DA91"></circle>
+                <text x="45%" y="55%" fill="black" style="font-size: 20px;">2</text>
+            </svg>
+         </div>
+            
+            
+        <div id="droppable" style="width: 100%;">
+            <svg width="200" height="200">
+               
+                <rect x="0"  y="0"  width="100" height="100" style="fill:rgb(246, 243, 75);" />
+                <text x="40" y="50" fill="black" font-size="25">A</text>
+                
+                <rect id="droppable2" x="100" y="0" width="100" height="100" style="fill:rgb(45, 133, 248);" />
+                <text x="140" y="50" fill="black" font-size="25">B</text>
+                
+                <rect id="droppable3" x="0"   y="100" width="100" height="100" style="fill:rgb(31, 204, 0);" />
+                <text x="40" y="150" fill="black" font-size="25">C</text>
+                
+                <rect id="droppable4" x="100" y="100" width="100" height="100" style="fill:rgb(150, 4, 207);" />
+                <text x="140" y="150" fill="black" font-size="25">D</text>
+            </svg>
+        </div> 
+        
+        <div id="bottom" style="width: 100%; ">
+            <svg  id="draggable3" width="50" height="50">
+                <circle  cx="25" cy="25" r="20"  fill="#12DA91"></circle>
+                <text x="45%" y="55%" fill="black" style="font-size: 20px;">3</text>
+            </svg>
+            <svg  id="draggable4" width="50" height="50">
+                <circle  cx="25" cy="25" r="20"  fill="#12DA91"></circle>
+                <text x="40%" y="60%" fill="black" style="font-size: 20px;">4</text>
+            </svg>
+        </div>
+            
+         
+        
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+            /*function showCoords(event){
+                var x = event.clientX;
+                var y = event.clientY;
+                console.log("X coords: " + x + ", Y coords: " + y);
+            }*/
+
+           
+               var item1 = $( "#draggable1" ).draggable({ revert: 'invalid' });
+               var item2 = $( "#draggable2" ).draggable({ revert: 'invalid' });
+               var item3 = $( "#draggable3" ).draggable({ revert: 'invalid' });
+               var item4 = $( "#draggable4" ).draggable({ revert: 'invalid' });
+              
+               var lock1=0, lock2=0, lock3=0, lock4=0;
+               
+
+                $( "#droppable" ).droppable({
+                  
+                    drop: function(event,ui) {
+                            var x = event.clientX;
+                            var y = event.clientY;
+                            var draggableId ='#' + ui.draggable.prop('id');
+                            
+                            
+                            //zone A
+                            if(x>=10 && x<=110 && y>=193 && y<=288 && lock1==0){
+                                console.log("zone A");
+                                document.getElementById(ui.draggable.prop('id')).setAttribute('style','left:35px;top:205px;position:absolute');
+                                $(draggableId).draggable({ disabled: true });
+                                lock1=1;
+                            }else if(x>=111 && x<= 210 && y>=193 && y<=288 && lock2==0){
+                                console.log("zone B");
+                                document.getElementById(ui.draggable.prop('id')).setAttribute('style','left:130px;top:205px;position:absolute');
+                                $(draggableId).draggable({ disabled: true });
+                                lock2=1;
+                            }else if(x>=10 && x<= 110 && y>=292 && y<=389 && lock3==0){
+                                console.log("zone C");
+                                document.getElementById(ui.draggable.prop('id')).setAttribute('style','left:35px;top:312px;position:absolute');
+                                $(draggableId).draggable({ disabled: true });
+                                lock3=1;
+                            }else if(x>=111 && x<= 210 && y>=292 && y<=389 && lock4==0){
+                                console.log("zone D");
+                                document.getElementById(ui.draggable.prop('id')).setAttribute('style','left:130px;top:312px;position:absolute');
+                                $(draggableId).draggable({ disabled: true });
+                                lock4=1;
+                            }else{
+                                if(ui.draggable.prop('id')=='draggable1'){
+                                    document.getElementById(ui.draggable.prop('id')).setAttribute('style','left:10px;top:50px;position:absolute');
+                                }
+                                if(ui.draggable.prop('id')=='draggable2'){
+                                    document.getElementById(ui.draggable.prop('id')).setAttribute('style','left:80px;top:50px;position:absolute');
+                                }
+                                if(ui.draggable.prop('id')=='draggable3'){
+                                    document.getElementById(ui.draggable.prop('id')).setAttribute('style','left:10px;top:400px;position:absolute');
+                                }
+                                if(ui.draggable.prop('id')=='draggable4'){
+                                    document.getElementById(ui.draggable.prop('id')).setAttribute('style','left:80px;top:400px;position:absolute');
+                                }
+                                
+                                
+                            }
+                            //console.log(lock1);
+                            //console.log(lock2);
+                            //console.log(lock3);
+                            //console.log(lock4);
+                            
+                            console.log(ui.position);
+                            //console.log($(this).attr("id"));
+                            //console.log('droppable is here '+ ui.draggable.prop('id'));
+                            //console.log("X coords: " + x + ", Y coords: " + y);
+                    }
+
+                });
+           
+
+        </script>
+    </body>
+</html>
